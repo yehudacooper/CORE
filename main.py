@@ -38,6 +38,26 @@ def system_first_uploading():
 
         print(e)
 
+def uploading_more_ducs_to_system():
+    """
+    this func uploads the system with more docs beyond the docs  which already exists
+    """
+    new_url = input("enter a new URL to update the docs in system")
+    label = input("enter the URL subject")
+    try:
+        clean = pre_process.get_clean_data(new_url, label)
+        text_arr = []
+
+        for i in clean.clean_data:
+            text_arr.append([i, clean.label[0]])
+
+        for i in text_arr:
+            query_doc.save_docs_into(i[0], i[1])
+    except Exception as e:
+
+        print(e)
+
+
 
 def finds_users_input_subject():
     """
@@ -67,6 +87,7 @@ def list_of_all_docs_terms_score_to_DB():
         list = query_doc.get_docs()
         tf_idf_score_list = find_tf_idf.finds_list_of_all_documents_terms_values(list)
         query_doc.save_tfidf(tf_idf_score_list)
+        print("finish")
         return find_tf_idf.finds_list_of_all_documents_terms_values(list)
     except Exception as e:
         print(e)
